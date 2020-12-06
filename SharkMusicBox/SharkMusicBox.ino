@@ -6,7 +6,7 @@ const byte recPin = 11;
 IRrecv irrecv(recPin);
 decode_results results;
 
-
+int melody = {};
 
 void setup() {
   Serial.begin(9600);
@@ -22,7 +22,7 @@ void loop() {
         babysharkdodo();
         break;
       case 0xFF18E7: //Keypad button "2"
-        jaws();
+        //jaws();
         break;
       case 0xFF7A85: //Keypad button "3"
         nevergonnagiveyouup();
@@ -54,13 +54,13 @@ void babysharkdodo() {
 
 }
 
-void jaws() {
+/*void jaws() {
   Serial.println("dundun");
-    int melody[] =
+  int melody[] =
   {
     NOTE_E3, NOTE_F3, 0, 0, NOTE_E3, NOTE_F3, NOTE_E3, 0, 0, 0,
     NOTE_E3, NOTE_F3, 0, NOTE_E3, NOTE_F3, 0, NOTE_E3, NOTE_F3, 0,
-    NOTE_E3, NOTE_F3,NOTE_E3, NOTE_F3,NOTE_E3, NOTE_F3,NOTE_E3, NOTE_F3,NOTE_E3, NOTE_F3,
+    NOTE_E3, NOTE_F3, NOTE_E3, NOTE_F3, NOTE_E3, NOTE_F3, NOTE_E3, NOTE_F3, NOTE_E3, NOTE_F3,
   }  ;
   int noteDurations[] = {2, 4, 4, 1, 2, 2, 4, 4, 2, 1, 2, 4, 4, 2, 4, 4, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 4};
 
@@ -74,7 +74,38 @@ void jaws() {
     noTone(buzzerPin);
   }
 
-}
+  }*/
 void nevergonnagiveyouup() {
-  Serial.println("best song ever");
+  int melody[] =
+  {
+    NOTE_A4, NOTE_B4, NOTE_D4, NOTE_B4, NOTE_FS5, NOTE_FS5, NOTE_E5,
+    NOTE_A4, NOTE_B4, NOTE_CS5, NOTE_A4, NOTE_E5, NOTE_E5, NOTE_D5,
+    NOTE_CS5, NOTE_B4, NOTE_A4, NOTE_B4, NOTE_D5, NOTE_B4,
+    NOTE_D5, NOTE_E5, NOTE_CS5, NOTE_A4, NOTE_A4, NOTE_E5, NOTE_D5,
+    NOTE_A4, NOTE_B4, NOTE_D4, NOTE_B4, NOTE_FS5, NOTE_FS5, NOTE_E5,
+    NOTE_A4, NOTE_B4, NOTE_CS5, NOTE_A4, NOTE_A5, NOTE_CS5, NOTE_D5,
+    NOTE_CS5, NOTE_B4, NOTE_A4, NOTE_B4, NOTE_D5, NOTE_B4,
+    NOTE_D5, NOTE_E5, NOTE_CS5, NOTE_B4, NOTE_A4, NOTE_A4, NOTE_E5, NOTE_D5
+  };
+  int noteDurations[] =
+  {
+    6, 7.5, 8, 8, 3, 3, 1.5,
+    8, 8, 8, 8, 4, 4, 2.5, 
+    8, 4, 8, 8, 8, 8,
+    2, 4, 2, 2, 4, 2, 1.5,
+    8, 8, 8, 8, 3, 3, 1.25,
+    8, 8, 8, 8, 2, 4, 3.5,
+    4, 3, 6, 8, 8, 7.5,
+    2, 4, 3, 8, 3, 4, 2, 1.5
+  };
+
+  for (int thisNote = 0; thisNote < 55; thisNote++) {
+
+    int noteDuration = 1000 / noteDurations[thisNote];
+    tone(buzzerPin, melody[thisNote], noteDuration);
+
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    noTone(buzzerPin);
+  }
 }
